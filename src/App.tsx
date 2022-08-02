@@ -7,7 +7,7 @@ interface Repo {
 
 function App() {
   const [repos, setRepos] = useState<Repo[]>([]);
-  const [filteredRepos, setFilteredRepos] = useState<Repo[]>([]);
+  // const [filteredRepos, setFilteredRepos] = useState<Repo[]>([]);
   const [search, setSearch] = useState('');
 
   console.log('Renderizou');
@@ -18,12 +18,19 @@ function App() {
       .then(data => setRepos(data))
   }, []);
 
-  useEffect(() => {
-    // o if (search.length) vai evitar uma renderização
-    if (search.length) {
-      setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
-    }
-  }, [search]);
+  // se algo existir dentro de search a variável vai ser os repositórios
+  // filtrados, onde o nome do repositório inclui na minha busca
+  // se não vai ser um array vazio
+  const filteredRepos = search.length > 0
+    ? repos.filter(repo => repo.name.includes(search))
+    : [];
+
+  // useEffect(() => {
+  //   // o if (search.length) vai evitar uma renderização
+  //   if (search.length) {
+  //     setFilteredRepos(repos.filter(repo => repo.name.includes(search)));
+  //   }
+  // }, [search]);
 
   return (
     <div>
